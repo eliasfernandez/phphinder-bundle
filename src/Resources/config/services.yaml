@@ -1,0 +1,41 @@
+parameters:
+    phphinder.storage: 'dbal' # 'dbal', 'json'
+    phphinder.name: 'pgsql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8'
+
+services:
+    PHPhinderBundle\Factory\StorageFactory:
+        arguments:
+            $storageType: '%phphinder.storage%'
+            $name: '%phphinder.name%'
+
+    phphinder.storage_factory:
+        alias: PHPhinderBundle\Factory\StorageFactory
+
+    PHPhinderBundle\Schema\SchemaGenerator:
+        class: PHPhinderBundle\Schema\SchemaGenerator
+        arguments:
+            $cacheDir: '%kernel.cache_dir%/phphinder'
+
+    phphinder.schema_generator:
+        alias: PHPhinderBundle\Schema\SchemaGenerator
+
+    PHPhinderBundle\EventListener\SchemaListener:
+        arguments:
+            $schemaGenerator: '@phphinder.schema_generator'
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'loadClassMetadata'
+
+    PHPhinderBundle\EventListener\EntityListener:
+        arguments:
+            $schemaGenerator: '@PHPhinderBundle\Schema\SchemaGenerator'
+            $factory: '@phphinder.storage_factory'
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'postPersist'
+            -
+                name: 'doctrine.event_listener'
+                event: 'postUpdate'
+
