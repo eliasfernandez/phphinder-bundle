@@ -10,7 +10,7 @@
 ## What is it?  
 [PHPhinder](https://github.com/eliasfernandez/phphinder) is an open-source, lightweight, and modular search engine designed for PHP applications. It provides powerful search capabilities with a focus on simplicity, speed, and extensibility.
 
-The PHPhinder bundle connects PHPhinder with symfony to improve the searchability of Doctrine entities. 
+The PHPhinder bundle connects PHPhinder with Symfony to improve the searchability of Doctrine entities. 
 
 ---
 

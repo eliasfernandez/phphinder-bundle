@@ -1,0 +1,21 @@
+{
+    "name": "eliasfernandez/phphinder-bundle",
+    "description": "Bundle to connect PHPhinder with Symfony",
+    "type": "library",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "PhphinderBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Elías Fernández",
+            "email": "eliasfernandez@gmail.com"
+        }
+    ],
+    "require": {
+        "eliasfernandez/phphinder": "^0.0.3@alpha"
+    },
+    "minimum-stability": "alpha"
+}
