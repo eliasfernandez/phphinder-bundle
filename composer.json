@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "eliasfernandez/phphinder": "^0.0.3@alpha"
+        "eliasfernandez/phphinder": "^0.0.4@alpha"
     },
     "minimum-stability": "alpha"
 }
