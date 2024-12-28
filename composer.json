@@ -5,7 +5,7 @@
     "license": "mit",
     "autoload": {
         "psr-4": {
-            "PhphinderBundle\\": "src/"
+            "PHPhinderBundle\\": "src/"
         }
     },
     "authors": [
