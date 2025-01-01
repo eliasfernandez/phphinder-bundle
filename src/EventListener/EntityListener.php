@@ -22,12 +22,12 @@ class EntityListener
 
     public function postPersist(PostPersistEventArgs $args): void
     {
-        //$this->syncEntity($args->getObject());
+        $this->syncEntity($args->getObject());
     }
 
     public function postUpdate(PostUpdateEventArgs $args): void
     {
-        //$this->syncEntity($args->getObject());
+        $this->syncEntity($args->getObject());
     }
 
     private function syncEntity(object $entity): void
