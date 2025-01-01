@@ -15,7 +15,9 @@
         }
     ],
     "require": {
-        "eliasfernandez/phphinder": "^0.0.4@alpha"
+        "eliasfernandez/phphinder": "^0.1",
+        "symfony/framework-bundle": "^7",
+        "doctrine/orm": "^3.3"
     },
     "minimum-stability": "alpha"
 }

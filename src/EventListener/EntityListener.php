@@ -5,18 +5,17 @@ namespace PHPhinderBundle\EventListener;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use PHPhinder\SearchEngine;
+use PHPhinderBundle\EventSubscriber\SyncEvent;
 use PHPhinderBundle\Factory\StorageFactory;
 use PHPhinderBundle\Schema\SchemaGenerator;
 use PHPhinderBundle\Serializer\PropertyAttributeSerializer;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EntityListener
 {
-    /** @var array<SearchEngine> */
-    private array $searchEngines = [];
-
     public function __construct(
-        private SchemaGenerator $schemaGenerator,
-        private StorageFactory $factory
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly bool $autoSync,
     ) {
     }
 
@@ -32,20 +31,9 @@ class EntityListener
 
     private function syncEntity(object $entity): void
     {
-        if (!$this->schemaGenerator->isSearchable($entity::class)) {
+        if (!$this->autoSync) {
             return;
         }
-        $schema = $this->schemaGenerator->generate($entity::class);
-
-        if (!isset($this->searchEngines[$entity::class])) {
-            $this->searchEngines[$entity::class] = new SearchEngine($this->factory->createStorage($schema));
-        }
-        $searchEngine = $this->searchEngines[$entity::class];
-
-        $searchEngine->addDocument(array_map(
-            fn ($value) => is_array($value) ? implode(', ', $value): $value, // patch to allow multi values
-            PropertyAttributeSerializer::serialize($entity)
-        ));
-        $searchEngine->flush();
+        $this->eventDispatcher->dispatch(new SyncEvent($entity), SyncEvent::EVENT);
     }
 }
