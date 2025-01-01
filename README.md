@@ -89,4 +89,20 @@ Then, in the actions, we can get results with one simgle method:
     }
 ```
 
+### Configuration
+
+#### `phphinder.storage` and `phphinder.name`
+
+You can define where the indexes are going to exist by configuring these two variables:
+
+* phphinder.storage could be `dbal`(search entities will live in a database) or `json` (in this case the data is stored in files).
+* phphinder.name depending on the chosen storage the name will be considered as a folder inside the `var` folder on the project (in case the storage is json) or as database defined by a DBAL dsn connection string. 
+
+### `phphinder.auto_sync`
+
+If auto_sync is enabled. Every time a searchable entity is added or updated the search engine will store the neccesary indexes.
+Attention: It could have a very high impact in systems with a high volume of writing in the database.
+
+### Final notes
+
 You can find a fully working example on the [PHPhinder project](https://github.com/eliasfernandez/phphinder-project)

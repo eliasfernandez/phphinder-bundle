@@ -13,6 +13,12 @@ class PHPhinderExtension extends Extension
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yaml');
+
+        $loader->load('phphinder.yaml');
+    }
+
+    public function getAlias(): string
+    {
+        return 'phphinder';
     }
 }

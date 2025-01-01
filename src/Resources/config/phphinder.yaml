@@ -1,7 +1,7 @@
 parameters:
-    phphinder.storage: 'dbal' # 'dbal', 'json'
-    phphinder.name: 'pgsql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8'
-
+    phphinder.storage: 'json' # 'dbal', 'json'
+    phphinder.name: 'var'
+    phphinder.auto_sync: true
 services:
     PHPhinderBundle\Factory\StorageFactory:
         arguments:
@@ -29,8 +29,8 @@ services:
 
     PHPhinderBundle\EventListener\EntityListener:
         arguments:
-            $schemaGenerator: '@PHPhinderBundle\Schema\SchemaGenerator'
-            $factory: '@phphinder.storage_factory'
+            $eventDispatcher: '@event_dispatcher'
+            $autoSync: '%phphinder.auto_sync%'
         tags:
             -
                 name: 'doctrine.event_listener'
@@ -38,4 +38,11 @@ services:
             -
                 name: 'doctrine.event_listener'
                 event: 'postUpdate'
-
+    PHPhinderBundle\EventSubscriber\SyncEventSubscriber:
+        arguments:
+            $schemaGenerator: '@PHPhinderBundle\Schema\SchemaGenerator'
+            $factory: '@phphinder.storage_factory'
+        tags:
+            -
+                name: 'kernel.event_listener'
+                event: 'sync.event'
