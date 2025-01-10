@@ -859,16 +859,16 @@
         },
         {
             "name": "eliasfernandez/phphinder",
-            "version": "v0.1.3-beta",
+            "version": "v0.1.4-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eliasfernandez/phphinder.git",
-                "reference": "08939ea6ce8ca34cb62a95f9c23aab3f3123856a"
+                "reference": "1081b3bc4678bce426c9cbfe87c5116f3f8d3746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eliasfernandez/phphinder/zipball/08939ea6ce8ca34cb62a95f9c23aab3f3123856a",
-                "reference": "08939ea6ce8ca34cb62a95f9c23aab3f3123856a",
+                "url": "https://api.github.com/repos/eliasfernandez/phphinder/zipball/1081b3bc4678bce426c9cbfe87c5116f3f8d3746",
+                "reference": "1081b3bc4678bce426c9cbfe87c5116f3f8d3746",
                 "shasum": ""
             },
             "require": {
@@ -900,9 +900,9 @@
             "description": "A PHP powered lightweight search engine",
             "support": {
                 "issues": "https://github.com/eliasfernandez/phphinder/issues",
-                "source": "https://github.com/eliasfernandez/phphinder/tree/v0.1.3-beta"
+                "source": "https://github.com/eliasfernandez/phphinder/tree/v0.1.4-beta"
             },
-            "time": "2025-01-08T06:27:45+00:00"
+            "time": "2025-01-10T16:38:53+00:00"
         },
         {
             "name": "psr/cache",
