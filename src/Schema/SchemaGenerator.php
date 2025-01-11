@@ -34,6 +34,12 @@ class SchemaGenerator
     }
 
 
+    /**
+     * @param \class-string $className
+     * @param array<string, array{flags: int, name: string}> $schemaData
+     * @param array<Transformer> $transformers
+     * @return Schema
+     */
     public function getSchema(string $className, array $schemaData, array $transformers): Schema
     {
         $filePath = $this->cacheDir . "/$className.php";
@@ -72,6 +78,15 @@ class SchemaGenerator
         return $attributes[0]?->newInstance() ?? null;
     }
 
+    private function getPropertyMethod(\ReflectionMethod $method): ?Property
+    {
+        $attributes = $method->getAttributes(Property::class);
+        if (!$attributes) {
+            return null;
+        }
+        return $attributes[0]?->newInstance() ?? null;
+    }
+
     /**
      * @return array<Transformer>
      */
@@ -82,16 +97,20 @@ class SchemaGenerator
         return $attributes[0]?->newInstance()->transformers ?? [];
     }
 
+    /**
+     * @param \class-string $className
+     * @param array<string, array{flags: int, name: string}> $schemaData
+     */
     private function createSchema(string $filePath, string $className, array $schemaData): void
     {
         $properties = '';
-        foreach ($schemaData as $property => $flags) {
-            $property = preg_replace('/\W+/', '', $property);
-            if ($property === 'id') {
-                $property = '_id';
+        foreach ($schemaData as $property => $configuration) {
+            $name = preg_replace('/\W+/', '', $configuration['name']);
+            if ($name === 'id') {
+                $name = '_id';
             }
-            $flags = intval($flags);
-            $properties .= "    public int \${$property} = {$flags};\n";
+            $flags = intval($configuration['flags']);
+            $properties .= "    public int \${$name} = {$flags};\n";
         }
 
         $schemaCode = <<<SCHEMA
@@ -140,18 +159,37 @@ class SchemaGenerator
         }
     }
 
+    /**
+     * @param \class-string $entityClass
+     * @return array<string, array{flags: int, name: string}>
+     */
     private function getSchemaProperties(string $entityClass): array
     {
         $class = $this->getReflectionClass($entityClass);
-        $properties = $class->getProperties();
-
         $schemaProperties = [];
+
+        $properties = $class->getProperties();
         foreach ($properties as $property) {
             $attribute = $this->getPropertyAttribute($property);
             if ($attribute !== null) {
-                $schemaProperties[$property->getName()] = $attribute->flags;
+                $schemaProperties[$property->getName()] = [
+                    'flags' => $attribute->flags,
+                    'name' => $attribute->name ?? $property->getName(),
+                ];
             }
         }
+
+        $methods = $class->getMethods();
+        foreach ($methods as $method) {
+            $attribute = $this->getPropertyMethod($method);
+            if ($attribute !== null) {
+                $schemaProperties[$method->getName()] = [
+                    'flags' => $attribute->flags,
+                    'name' => $attribute->name ?? $method->getName(),
+                ];
+            }
+        }
+
         return $schemaProperties;
     }
 

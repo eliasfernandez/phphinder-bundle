@@ -18,10 +18,22 @@ class PropertyAttributeSerializer
             if (!empty($propertyAttributes)) {
                 $property->setAccessible(true);
                 $value = $property->getValue($entity);
-                $field = $property->getName();
+                $field = $propertyAttributes->name ?? $property->getName();
                 $serializedData[$field === 'id' ? '_id' : $field] = $value;
             }
         }
+
+        foreach ($reflectionClass->getMethods() as $method) {
+            $propertyAttributes = $method->getAttributes(Property::class);
+
+            if (!empty($propertyAttributes)) {
+                $arguments = $propertyAttributes[0]->getArguments();
+                $value = $method->invoke($entity);
+                $field = $arguments['name'] ?? $method->getName();
+                $serializedData[$field === 'id' ? '_id' : $field] = $value;
+            }
+        }
+
         return $serializedData;
     }
 }
