@@ -42,13 +42,18 @@ class Book
     private ?string $title = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
-    #[PHPhinder\Property(Schema::IS_INDEXED | Schema::IS_REQUIRED)]
     private array $authors = [];
 
     #[ORM\Column(type: Types::TEXT)]
     #[PHPhinder\Property(Schema::IS_INDEXED)]
     private ?string $description = null;
 ...
+    
+    #[PHPhinder\Property(Schema::IS_INDEXED | Schema::IS_REQUIRED, name: 'authors')]
+    public function getAuthorsCsv(): string
+    {
+        return implode(', ', $this->authors);
+    }}
 ```
 
 ### Controller
@@ -69,7 +74,7 @@ On the controller side we'll need to configure the Search engine to look for `Bo
 
 ```
 
-Then, in the actions, we can get results with one simgle method:
+Then, in the actions, we can get results with one single method:
 
 ```php
     #[Route('/search', name: 'app_search', methods: ['GET', 'POST'])]
