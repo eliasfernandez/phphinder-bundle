@@ -1,5 +1,5 @@
 parameters:
-    phphinder.storage: 'json' # 'dbal', 'json'
+    phphinder.storage: 'json' # 'dbal', 'json', 'redis'
     phphinder.name: 'var'
     phphinder.auto_sync: true
 services:

@@ -100,7 +100,7 @@ Then, in the actions, we can get results with one single method:
 
 You can define where the indexes are going to exist by configuring these two variables:
 
-* phphinder.storage could be `dbal`(search entities will live in a database) or `json` (in this case the data is stored in files).
+* phphinder.storage could be `dbal`(search entities will live in a database), `redis` (entities stored in a redis engine) or `json` (in this case the data is stored in files).
 * phphinder.name depending on the chosen storage the name will be considered as a folder inside the `var` folder on the project (in case the storage is json) or as database defined by a DBAL dsn connection string. 
 
 ### `phphinder.auto_sync`
