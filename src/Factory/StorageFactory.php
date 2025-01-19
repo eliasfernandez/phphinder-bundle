@@ -13,6 +13,7 @@ class StorageFactory
     public function __construct(
         private readonly string $storageType,
         private readonly string $name,
+        private readonly string $projectDir,
     ) {}
 
     public function createStorage(Schema $schema): Storage
@@ -20,7 +21,7 @@ class StorageFactory
         return match ($this->storageType) {
             'dbal' => new DbalStorage($this->name, $schema),
             'redis' => new RedisStorage($this->name, $schema),
-            default => new JsonStorage($this->name, $schema)
+            default => new JsonStorage($this->projectDir . DIRECTORY_SEPARATOR . $this->name, $schema)
         };
     }
 }

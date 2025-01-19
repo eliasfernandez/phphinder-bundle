@@ -1,12 +1,9 @@
-parameters:
-    phphinder.storage: 'json' # 'dbal', 'json', 'redis'
-    phphinder.name: 'var'
-    phphinder.auto_sync: true
 services:
     PHPhinderBundle\Factory\StorageFactory:
         arguments:
             $storageType: '%phphinder.storage%'
             $name: '%phphinder.name%'
+            $projectDir: '%kernel.project_dir%'
 
     phphinder.storage_factory:
         alias: PHPhinderBundle\Factory\StorageFactory
@@ -31,6 +28,8 @@ services:
         arguments:
             $eventDispatcher: '@event_dispatcher'
             $autoSync: '%phphinder.auto_sync%'
+            $syncInBackground: '%phphinder.sync_in_background%'
+            $messenger: '@Symfony\Component\Messenger\MessageBusInterface'
         tags:
             -
                 name: 'doctrine.event_listener'
@@ -46,3 +45,11 @@ services:
             -
                 name: 'kernel.event_listener'
                 event: 'sync.event'
+    PHPhinderBundle\Message\SyncMessageHandler:
+        arguments:
+            $objectManager: '@doctrine.orm.default_entity_manager'
+            $eventDispatcher: '@event_dispatcher'
+        tags:
+            -
+                name: 'messenger.message_handler'
+                handles: 'PHPhinderBundle\Message\SyncMessage'
