@@ -17,7 +17,8 @@
     "require": {
         "eliasfernandez/phphinder": "^0.1",
         "symfony/framework-bundle": "^7",
-        "doctrine/orm": "^3.3"
+        "doctrine/orm": "^3.3",
+        "symfony/messenger": "^7"
     },
     "minimum-stability": "alpha"
 }
