@@ -20,6 +20,8 @@ class SchemaListener
     public function loadClassMetadata(LoadClassMetadataEventArgs $args): void
     {
         $classMetadata = $args->getClassMetadata();
-        $this->schemaGenerator->generate($classMetadata->getName());
+        if ($this->schemaGenerator->isSearchable($classMetadata->getName())) {
+            $this->schemaGenerator->generate($classMetadata->getName());
+        }
     }
 }

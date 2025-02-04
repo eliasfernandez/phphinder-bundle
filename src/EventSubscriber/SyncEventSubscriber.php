@@ -32,10 +32,10 @@ class SyncEventSubscriber
         }
         $searchEngine = $this->searchEngines[$entity::class];
 
-        $searchEngine->addDocument(array_map(
-            fn ($value) => is_array($value) ? implode(', ', $value): $value, // patch to allow multi values
+        $searchEngine->addDocument(array_filter(array_map(
+            fn ($value) => is_array($value) ? implode(', ', $value) : $value, // patch to allow multi values
             PropertyAttributeSerializer::serialize($entity)
-        ));
+        )));
         $searchEngine->flush();
     }
 }
