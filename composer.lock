@@ -857,16 +857,16 @@
         },
         {
             "name": "eliasfernandez/phphinder",
-            "version": "v0.1.8-beta",
+            "version": "v0.1.9-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eliasfernandez/phphinder.git",
-                "reference": "4c5896f29b15b859c71fa5514b6c384d7efcf389"
+                "reference": "d74abfa5e2dfb8178f48adfc2d4a819320e44d1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eliasfernandez/phphinder/zipball/4c5896f29b15b859c71fa5514b6c384d7efcf389",
-                "reference": "4c5896f29b15b859c71fa5514b6c384d7efcf389",
+                "url": "https://api.github.com/repos/eliasfernandez/phphinder/zipball/d74abfa5e2dfb8178f48adfc2d4a819320e44d1c",
+                "reference": "d74abfa5e2dfb8178f48adfc2d4a819320e44d1c",
                 "shasum": ""
             },
             "require": {
@@ -899,9 +899,9 @@
             "description": "A PHP powered lightweight search engine",
             "support": {
                 "issues": "https://github.com/eliasfernandez/phphinder/issues",
-                "source": "https://github.com/eliasfernandez/phphinder/tree/v0.1.8-beta"
+                "source": "https://github.com/eliasfernandez/phphinder/tree/v0.1.9-beta"
             },
-            "time": "2025-03-16T08:30:08+00:00"
+            "time": "2025-03-16T10:30:21+00:00"
         },
         {
             "name": "predis/predis",
